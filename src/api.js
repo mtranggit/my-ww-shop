@@ -8,14 +8,8 @@ const API = 'https://wooliesxfechallenge.azurewebsites.net/api/v1/resources'
 export const fetchProducts = async () => {
   try {
     const result = await axios.get(`${API}/products?token=${token}`)
-    return {
-      response: 0,
-      data: result.data,
-    }
+    return result
   } catch (error) {
-    return {
-      error: `Unable to fetch products`,
-      response: 1,
-    }
+    throw new Error('Unable to fetch products')
   }
 }
