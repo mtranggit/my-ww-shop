@@ -13,3 +13,13 @@ export const fetchProducts = async () => {
     throw new Error('Unable to fetch products')
   }
 }
+
+export const fetchProductById = async (id) => {
+  try {
+    // api currently does not support get product by id directly, so get all products and filter out the match product
+    const {data: products} = await axios.get(`${API}/products?token=${token}`)
+    return products.find((p) => p.productId === id)
+  } catch (error) {
+    throw new Error('Unable to fetch products')
+  }
+}

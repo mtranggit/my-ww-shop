@@ -1,36 +1,18 @@
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {Button, Card, Col, Image, ListGroup, Row} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import {fetchProducts} from '../api'
-// import products from '../products'
+import {listProductDetails} from '../actions/productActions'
 
 export const ProductScreen = ({match}) => {
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [product, setProduct] = useState({})
+  const dispatch = useDispatch()
+
+  const productDetails = useSelector((state) => state.productDetails)
+  const {product, loading, error} = productDetails
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const {data: products} = await fetchProducts()
-        const product = products.find((p) => p.productId === match.params.id)
-        if (product) {
-          setProduct(product)
-        } else {
-          setError('Product not found')
-          setProduct({})
-        }
-        setLoading(false)
-      } catch (e) {
-        console.log(e)
-        setError('Unable to fetch product')
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [match.params.id])
+    dispatch(listProductDetails(match.params.id))
+  }, [dispatch, match])
 
   return (
     <>
