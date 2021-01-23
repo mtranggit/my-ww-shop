@@ -1,28 +1,18 @@
 import {Col, Row} from 'react-bootstrap'
-import {useState, useEffect} from 'react'
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import {Product} from '../components/Product'
-import {fetchProducts} from '../api'
+import {listProducts} from '../actions/productActions'
 
 export const HomeScreen = () => {
-  const [error, setError] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  const productList = useSelector((state) => state.productList)
+  const {products, loading, error} = productList
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const {data} = await fetchProducts()
-        setProducts(data)
-        setLoading(false)
-      } catch (e) {
-        setError('Unable to fetch products')
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
+    dispatch(listProducts())
+  }, [dispatch])
+
   return (
     <>
       <h1>Our latest Products</h1>
