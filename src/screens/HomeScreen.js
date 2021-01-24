@@ -16,7 +16,7 @@ export const HomeScreen = ({history}) => {
   }, [dispatch])
 
   const addToCartHandler = (id) => {
-    history.push(`/cart/${id}&qty=1`)
+    history.push(`/cart/${id}`)
   }
 
   return (

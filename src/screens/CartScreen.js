@@ -19,7 +19,8 @@ export const CartScreen = ({match, history}) => {
 
   const qtyStr = match.params.id ? match.params.id.split('&')[1] : ''
 
-  const qty = qtyStr.indexOf('=') > 0 ? Number(qtyStr.split('=')[1]) : 1
+  const qty =
+    qtyStr && qtyStr.indexOf('=') > 0 ? Number(qtyStr.split('=')[1]) : 0
 
   const dispatch = useDispatch()
 

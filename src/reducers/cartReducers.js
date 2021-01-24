@@ -18,14 +18,17 @@ export const cartReducer = (state = initialCartState, action) => {
           ...state,
           cartItems: state.cartItems.map((x) =>
             x.productId === existingItem.productId
-              ? {...item, qty: item.qty + x.qty}
+              ? {
+                  ...item,
+                  qty: item.qty === 0 ? x.qty + 1 : item.qty,
+                }
               : x,
           ),
         }
       } else {
         return {
           ...state,
-          cartItems: [...state.cartItems, item],
+          cartItems: [...state.cartItems, {...item, qty: 1}],
         }
       }
     case CART_REMOVE_ITEM:
