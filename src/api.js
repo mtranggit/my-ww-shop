@@ -8,6 +8,7 @@ const API = 'https://wooliesxfechallenge.azurewebsites.net/api/v1/resources'
 export const fetchProducts = async () => {
   try {
     const result = await axios.get(`${API}/products?token=${token}`)
+    // console.log('result', result)
     return result
   } catch (error) {
     throw new Error('Unable to fetch products')
@@ -21,5 +22,19 @@ export const fetchProductById = async (id) => {
     return products.find((p) => p.productId === id)
   } catch (error) {
     throw new Error('Unable to fetch products')
+  }
+}
+
+export const submitOrder = async (order, config) => {
+  try {
+    const result = await axios.post(
+      `${API}/checkout?token=${token}`,
+      order,
+      config,
+    )
+    // console.log('result', result)
+    return result
+  } catch (error) {
+    throw new Error('Unable to create order')
   }
 }
