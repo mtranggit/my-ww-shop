@@ -1,7 +1,7 @@
-import {Card} from 'react-bootstrap'
+import {Button, Card} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 
-export const Product = ({product}) => {
+export const Product = ({product, onAddToCart}) => {
   return (
     <Card className="my-3 p-3 rounded">
       <Link to={`/product/${product.productId}`}>
@@ -17,6 +17,15 @@ export const Product = ({product}) => {
 
         <Card.Text as="h3">${product.audPrice}</Card.Text>
       </Card.Body>
+
+      <Button
+        className="btn-block"
+        onClick={onAddToCart}
+        type="button"
+        disabled={product.stockOnHand === 0}
+      >
+        Add To Cart
+      </Button>
     </Card>
   )
 }

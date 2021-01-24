@@ -6,7 +6,7 @@ import {listProducts} from '../actions/productActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 
-export const HomeScreen = () => {
+export const HomeScreen = ({history}) => {
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.productList)
   const {products, loading, error} = productList
@@ -14,6 +14,10 @@ export const HomeScreen = () => {
   useEffect(() => {
     dispatch(listProducts())
   }, [dispatch])
+
+  const addToCartHandler = (id) => {
+    history.push(`/cart/${id}&qty=1`)
+  }
 
   return (
     <>
@@ -26,7 +30,10 @@ export const HomeScreen = () => {
         <Row>
           {products.map((product) => (
             <Col key={product.productId} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
+              <Product
+                product={product}
+                onAddToCart={() => addToCartHandler(product.productId)}
+              />
             </Col>
           ))}
         </Row>
